@@ -69,7 +69,6 @@ var context = context || (function () {
               eventAction = data[i].action;
             $sub.find('a').attr('id', actionID);
             $('#' + actionID).addClass('context-event');
-            //$(document).on('click', '#' + actionID, eventAction);
             $(document).on('click', '#' + actionID, function(evt){
               console.log("stuff:", $menu);
               eventAction(evt, $menu);
