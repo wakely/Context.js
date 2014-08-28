@@ -63,12 +63,18 @@ var context = context || (function () {
 					$sub = $('<li><a tabindex="-1" href="' + data[i].href + '"'+linkTarget+'>' + data[i].text + '</a></li>');
 				}
 				if (typeof data[i].action !== 'undefined') {
-					var actiond = new Date(),
-						actionID = 'event-' + actiond.getTime() * Math.floor(Math.random()*100000),
-						eventAction = data[i].action;
-					$sub.find('a').attr('id', actionID);
-					$('#' + actionID).addClass('context-event');
-					$(document).on('click', '#' + actionID, eventAction);
+          (function () {
+            var actiond = new Date(),
+              actionID = 'event-' + actiond.getTime() * Math.floor(Math.random()*100000),
+              eventAction = data[i].action;
+            $sub.find('a').attr('id', actionID);
+            $('#' + actionID).addClass('context-event');
+            //$(document).on('click', '#' + actionID, eventAction);
+            $(document).on('click', '#' + actionID, function(evt){
+              console.log("stuff:", $menu);
+              eventAction(evt, $menu);
+            });
+          })();
 				}
 				$menu.append($sub);
 				if (typeof data[i].subMenu != 'undefined') {
@@ -91,6 +97,7 @@ var context = context || (function () {
 
 		$('body').append($menu);
 
+    $menu.spawningEvent = e;
 
 		$(document).on('contextmenu', selector, function (e) {
 			e.preventDefault();
